@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{ personal.name }}, {{ personal.credentials }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1a365d;
+            --color-accent: #2c5282;
+            --color-text: #2d3748;
+            --color-text-light: #4a5568;
+            --color-border: #e2e8f0;
+            --color-bg: #ffffff;
+            --color-bg-subtle: #f7fafc;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body: 'Source Sans 3', -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background: var(--color-bg);
+            line-height: 1.5;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cv-container {
+            width: 100%;
+            background: var(--color-bg);
+        }
+
+        /* Header */
+        .header {
+            background: var(--color-primary);
+            color: white;
+            padding: 1.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .header-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 20%;
+            background: white;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            margin-left: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .name {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.1rem;
+        }
+
+        .credentials {
+            font-size: 0.95rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 300;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .contact-item svg {
+            width: 12px;
+            height: 12px;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1.4rem 0;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 1.4rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--color-primary);
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.35rem;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        /* Profile */
+        .profile-text {
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        /* Experience Items */
+        .experience-item {
+            margin-bottom: 1rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid var(--color-border);
+        }
+
+        .job-header {
+            margin-bottom: 0.35rem;
+        }
+
+        .job-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            line-height: 1.2;
+        }
+
+        .job-company {
+            font-size: 0.82rem;
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .job-meta {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+        }
+
+        .job-description ul {
+            list-style: none;
+            margin-top: 0.4rem;
+        }
+
+        .job-description li {
+            position: relative;
+            padding-left: 0.9rem;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .job-description li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            width: 4px;
+            height: 4px;
+            background: var(--color-accent);
+            border-radius: 50%;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 0.75rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid var(--color-border);
+        }
+
+        .degree {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .institution {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            margin-top: 0.1rem;
+        }
+
+        .education-period {
+            font-weight: 400;
+        }
+
+        .education-description {
+            font-size: 0.78rem;
+            line-height: 1.5;
+            margin-top: 0.2rem;
+        }
+
+        /* Compact lists */
+        .compact-list {
+            list-style: none;
+        }
+
+        .compact-list li {
+            position: relative;
+            padding-left: 0.9rem;
+            margin-bottom: 0.35rem;
+            font-size: 0.8rem;
+            line-height: 1.45;
+        }
+
+        .compact-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            width: 4px;
+            height: 4px;
+            background: var(--color-accent);
+            border-radius: 50%;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Info items */
+        .info-item {
+            padding: 0.5rem 0.75rem;
+            background: var(--color-bg-subtle);
+            border-radius: 3px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* References */
+        .reference-item {
+            padding: 0.5rem 0.75rem;
+            background: var(--color-bg-subtle);
+            border-radius: 3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .reference-name {
+            font-weight: 600;
+            color: var(--color-primary);
+            font-size: 0.8rem;
+        }
+
+        .reference-title {
+            font-size: 0.75rem;
+            color: var(--color-text-light);
+            margin-top: 0.1rem;
+        }
+
+        /* Publications */
+        .pub-category {
+            margin-bottom: 0.7rem;
+        }
+
+        .pub-category-title {
+            font-weight: 600;
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .pub-item {
+            font-size: 0.75rem;
+            margin-bottom: 0.25rem;
+            line-height: 1.45;
+        }
+
+        .pub-title {
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 0.6rem;
+            font-size: 0.7rem;
+            color: var(--color-text-light);
+            border-top: 1px solid var(--color-border);
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="name">{{ personal.name }}</h1>
+                <p class="credentials">{{ personal.credentials }}</p>
+                <div class="contact-info">
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {{ personal.location }}
+                    </span>
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        {{ personal.phone }}
+                    </span>
+                    <span class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        {{ personal.email }}
+                    </span>
+                </div>
+            </div>
+            {% if personal.photo %}
+            <img src="{{ personal.photo }}" alt="{{ personal.name }}" class="header-photo">
+            {% endif %}
+        </header>
+
+        <main class="main-content">
+            <!-- Profile -->
+            {% if visibility.profile %}
+            <section class="section">
+                <h2 class="section-title">{{ t.profile }}</h2>
+                <p class="profile-text">{{ profile }}</p>
+            </section>
+            {% endif %}
+
+            <!-- Experience -->
+            {% if visibility.experience %}
+            <section class="section">
+                <h2 class="section-title">{{ t.experience }}</h2>
+                {% for job in experience %}{% if job.visible != false %}
+                <div class="experience-item">
+                    <div class="job-header">
+                        <h3 class="job-title">{{ job.title }}</h3>
+                        <p class="job-company">{{ job.company }}</p>
+                        {% if job.period or job.location %}
+                        <p class="job-meta">{{ job.period }}{% if job.period and job.location %} — {% endif %}{{ job.location }}</p>
+                        {% endif %}
+                    </div>
+                    {% if job.responsibilities %}
+                    <div class="job-description">
+                        <ul>
+                        {% for resp in job.responsibilities %}
+                            <li>{{ resp }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}{% endfor %}
+            </section>
+            {% endif %}
+
+            <!-- Education -->
+            {% if visibility.education %}
+            <section class="section">
+                <h2 class="section-title">{{ t.education }}</h2>
+                {% for edu in education %}{% if edu.visible != false %}
+                <div class="education-item">
+                    <h3 class="degree">{{ edu.degree }}</h3>
+                    <p class="institution">{{ edu.institution }}{% if edu.period %} <span class="education-period">· {{ edu.period }}</span>{% endif %}</p>
+                    {% if edu.description %}
+                    <p class="education-description">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+                {% endif %}{% endfor %}
+            </section>
+            {% endif %}
+
+            <!-- Teaching -->
+            {% if visibility.teaching %}
+            <section class="section">
+                <h2 class="section-title">{{ t.teaching }}</h2>
+                <ul class="compact-list">
+                {% for item in teaching %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            <!-- Publications -->
+            {% if visibility.publications and publications %}
+            <section class="section">
+                <h2 class="section-title">{{ t.publications }}</h2>
+                {% if publications.books %}
+                <div class="pub-category">
+                    <div class="pub-category-title">{{ t.books }}</div>
+                    {% for pub in publications.books %}{% if pub.visible != false %}
+                    <div class="pub-item">{{ pub.authors | join(', ') }} ({{ pub.year }}). <span class="pub-title">{{ pub.title }}</span>. {{ pub.publisher }}.</div>
+                    {% endif %}{% endfor %}
+                </div>
+                {% endif %}
+                {% if publications.book_chapters %}
+                <div class="pub-category">
+                    <div class="pub-category-title">{{ t.book_chapters }}</div>
+                    {% for pub in publications.book_chapters %}{% if pub.visible != false %}
+                    <div class="pub-item">{{ pub.authors | join(', ') }} ({{ pub.year }}). {{ pub.title }}. In: <span class="pub-title">{{ pub.publication }}</span>.</div>
+                    {% endif %}{% endfor %}
+                </div>
+                {% endif %}
+                {% if publications.articles %}
+                <div class="pub-category">
+                    <div class="pub-category-title">{{ t.articles }} ({{ publications.articles | length }}+ {{ t.articles_total }})</div>
+                    {% for pub in publications.articles %}{% if pub.visible != false %}
+                    <div class="pub-item">{{ pub.authors | join(', ') }} ({{ pub.year }}). {{ pub.title }}. <span class="pub-title">{{ pub.publication }}</span>.</div>
+                    {% endif %}{% endfor %}
+                </div>
+                {% endif %}
+            </section>
+            {% endif %}
+
+            <!-- Presentations -->
+            {% if visibility.presentations and presentations %}
+            <section class="section">
+                <h2 class="section-title">{{ t.presentations }}</h2>
+                <ul class="compact-list">
+                {% for pres in presentations %}{% if pres.visible != false %}
+                    <li><strong>{{ pres.title }}</strong> — {{ pres.event }}, {{ pres.location }} ({{ pres.date }}). {{ pres.role }}.</li>
+                {% endif %}{% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+
+            <!-- Media -->
+            {% if visibility.media_summary and media_summary %}
+            <section class="section">
+                <h2 class="section-title">{{ t.media }}</h2>
+                <p class="profile-text">{{ media_summary }}</p>
+            </section>
+            {% endif %}
+
+            <!-- Languages & Hobbies -->
+            {% if visibility.languages or visibility.hobbies %}
+            <div class="two-column">
+                {% if visibility.languages %}
+                <section class="section">
+                    <h2 class="section-title">{{ t.languages }}</h2>
+                    <div class="info-item">{{ languages }}</div>
+                </section>
+                {% endif %}
+                {% if visibility.hobbies %}
+                <section class="section">
+                    <h2 class="section-title">{{ t.hobbies }}</h2>
+                    <div class="info-item">{{ hobbies }}</div>
+                </section>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- References -->
+            {% if visibility.references %}
+            <section class="section">
+                <h2 class="section-title">{{ t.references }}</h2>
+                <div class="two-column">
+                {% for ref in references %}{% if ref.visible != false %}
+                    <div class="reference-item">
+                        <p class="reference-name">{{ ref.name }}</p>
+                        <p class="reference-title">{{ ref.title }}</p>
+                    </div>
+                {% endif %}{% endfor %}
+                </div>
+                <p style="font-size: 0.7rem; color: var(--color-text-light); margin-top: 0.4rem;">{{ t.references_note }}</p>
+            </section>
+            {% endif %}
+        </main>
+
+        <footer class="footer">
+            {{ t.cv_footer }} — {{ personal.name }}, {{ personal.credentials }}
+        </footer>
+    </div>
+</body>
+</html>

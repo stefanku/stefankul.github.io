@@ -1,0 +1,112 @@
+{% extends "portfolio_base.html" %}
+
+{% set page = 'cv' %}
+{% set altLangUrl = (lang == 'en') and 'nl.html' or 'index.html' %}
+
+{% block title %}CV - {{ personal.name }}{% endblock %}
+
+{% block content %}
+<section class="section cv-page">
+    <div class="container">
+        <!-- CV Header -->
+        <div class="cv-header">
+            <div class="cv-header-content">
+                <h1 class="cv-title">{{ t.cv_footer | default('Curriculum Vitae') }}</h1>
+                <p class="cv-name">{{ personal.name }}, {{ personal.credentials }}</p>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        {% if visibility.profile %}
+        <div class="cv-section">
+            <h2 class="cv-section-title">{{ t.profile }}</h2>
+            <p class="cv-profile-text">{{ profile }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Experience -->
+        {% if visibility.experience %}
+        <div class="cv-section">
+            <h2 class="cv-section-title">{{ t.experience }}</h2>
+            {% for job in experience %}{% if job.visible != false %}
+            <div class="cv-item">
+                <div class="cv-item-header">
+                    <div>
+                        <h3 class="cv-item-title">{{ job.title }}</h3>
+                        <p class="cv-item-subtitle">{{ job.company }}</p>
+                    </div>
+                    <div class="cv-item-meta">
+                        <span class="cv-period">{{ job.period }}</span>
+                        {% if job.location %}<span class="cv-location">{{ job.location }}</span>{% endif %}
+                    </div>
+                </div>
+                {% if job.responsibilities %}
+                <ul class="cv-list">
+                    {% for resp in job.responsibilities %}
+                    <li>{{ resp }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Education -->
+        {% if visibility.education %}
+        <div class="cv-section">
+            <h2 class="cv-section-title">{{ t.education }}</h2>
+            {% for edu in education %}{% if edu.visible != false %}
+            <div class="cv-item">
+                <div class="cv-item-header">
+                    <div>
+                        <h3 class="cv-item-title">{{ edu.degree }}</h3>
+                        <p class="cv-item-subtitle">{{ edu.institution }}</p>
+                    </div>
+                    <div class="cv-item-meta">
+                        <span class="cv-period">{{ edu.period }}</span>
+                    </div>
+                </div>
+                {% if edu.description %}
+                <p class="cv-description">{{ edu.description }}</p>
+                {% endif %}
+            </div>
+            {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Teaching -->
+        {% if visibility.teaching %}
+        <div class="cv-section">
+            <h2 class="cv-section-title">{{ t.teaching }}</h2>
+            <ul class="cv-list">
+                {% for item in teaching %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Publications & Presentations Links -->
+        <div class="cv-section">
+            <div class="cv-links-row">
+                <a href="{{ basePath }}{% if basePath %}/{% endif %}publications/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="btn btn-secondary">
+                    {{ t.publications_page_title | default('Publications') }} &rarr;
+                </a>
+                <a href="{{ basePath }}{% if basePath %}/{% endif %}presentations/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="btn btn-secondary">
+                    {{ t.presentations_page_title | default('Presentations') }} &rarr;
+                </a>
+            </div>
+        </div>
+
+        <!-- Languages -->
+        {% if visibility.languages %}
+        <div class="cv-section">
+            <h2 class="cv-section-title">{{ t.languages }}</h2>
+            <p class="cv-info">{{ languages }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

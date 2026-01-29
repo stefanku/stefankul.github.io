@@ -1,0 +1,140 @@
+{% extends "portfolio_base.html" %}
+
+{% set page = 'publications' %}
+{% set altLangUrl = (lang == 'en') and 'nl.html' or 'index.html' %}
+
+{% block title %}{{ t.publications_page_title | default('Publications') }} - {{ personal.name }}{% endblock %}
+
+{% block content %}
+<section class="section publications-page">
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">{{ t.publications_page_title | default('Publications') }}</h1>
+            <p class="page-subtitle">{{ t.publications_intro | default('Academic publications, books, and research papers') }}</p>
+        </header>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" id="publication-filters">
+            <button class="filter-tab active" data-filter="all">{{ t.all | default('All') }}</button>
+            {% if publications.books %}<button class="filter-tab" data-filter="books">{{ t.books | default('Books') }}</button>{% endif %}
+            {% if publications.book_chapters %}<button class="filter-tab" data-filter="chapters">{{ t.book_chapters | default('Book Chapters') }}</button>{% endif %}
+            {% if publications.articles %}<button class="filter-tab" data-filter="articles">{{ t.articles | default('Articles') }}</button>{% endif %}
+        </div>
+
+        <div class="publications-container">
+            <!-- Books -->
+            {% if publications.books %}
+            <div class="publication-category" data-category="books">
+                <h2 class="category-title">
+                    <span class="category-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </span>
+                    {{ t.books | default('Books') }}
+                </h2>
+                <div class="publication-list">
+                    {% for pub in publications.books %}{% if pub.visible != false %}
+                    <article class="publication-card">
+                        <div class="publication-year">{{ pub.year }}</div>
+                        <div class="publication-content">
+                            <h3 class="publication-title">{{ pub.title }}</h3>
+                            <p class="publication-authors">{{ pub.authors | join(', ') }}</p>
+                            <p class="publication-details">{{ pub.publisher }}</p>
+                        </div>
+                    </article>
+                    {% endif %}{% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Book Chapters -->
+            {% if publications.book_chapters %}
+            <div class="publication-category" data-category="chapters">
+                <h2 class="category-title">
+                    <span class="category-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                    </span>
+                    {{ t.book_chapters | default('Book Chapters') }}
+                </h2>
+                <div class="publication-list">
+                    {% for pub in publications.book_chapters %}{% if pub.visible != false %}
+                    <article class="publication-card">
+                        <div class="publication-year">{{ pub.year }}</div>
+                        <div class="publication-content">
+                            <h3 class="publication-title">{{ pub.title }}</h3>
+                            <p class="publication-authors">{{ pub.authors | join(', ') }}</p>
+                            <p class="publication-details">In: <em>{{ pub.publication }}</em></p>
+                        </div>
+                    </article>
+                    {% endif %}{% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Articles -->
+            {% if publications.articles %}
+            <div class="publication-category" data-category="articles">
+                <h2 class="category-title">
+                    <span class="category-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </span>
+                    {{ t.articles_full | default('Articles') }}
+                    <span class="category-count">({{ publications.articles | length }}+ {{ t.articles_total | default('total') }})</span>
+                </h2>
+                <div class="publication-list">
+                    {% for pub in publications.articles %}{% if pub.visible != false %}
+                    <article class="publication-card">
+                        <div class="publication-year">{{ pub.year }}</div>
+                        <div class="publication-content">
+                            <h3 class="publication-title">{{ pub.title }}</h3>
+                            <p class="publication-authors">{{ pub.authors | join(', ') }}</p>
+                            <p class="publication-details"><em>{{ pub.publication }}</em></p>
+                        </div>
+                    </article>
+                    {% endif %}{% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filters = document.querySelectorAll('.filter-tab');
+    const categories = document.querySelectorAll('.publication-category');
+
+    filters.forEach(filter => {
+        filter.addEventListener('click', function() {
+            const target = this.dataset.filter;
+
+            // Update active tab
+            filters.forEach(f => f.classList.remove('active'));
+            this.classList.add('active');
+
+            // Show/hide categories
+            categories.forEach(cat => {
+                if (target === 'all' || cat.dataset.category === target) {
+                    cat.style.display = 'block';
+                } else {
+                    cat.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

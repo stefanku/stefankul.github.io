@@ -1,0 +1,33 @@
+{
+  "name": "cv-generator",
+  "version": "1.0.0",
+  "description": "Generate professional CV PDFs from JSON data (bilingual EN/NL)",
+  "main": "generate_cv.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node generate_portfolio.js",
+    "preview": "npx serve docs -l 3001",
+    "generate": "node generate_cv.js -l en -l nl",
+    "generate:en": "node generate_cv.js --lang en --html",
+    "generate:nl": "node generate_cv.js --lang nl --html",
+    "preview:en": "node generate_cv.js --lang en --html && open cv_stefan_kulk_en.html",
+    "preview:nl": "node generate_cv.js --lang nl --html && open cv_stefan_kulk_nl.html",
+    "deploy": "npm run build && git add docs && git commit -m 'Update portfolio' && git push"
+  },
+  "keywords": [
+    "cv",
+    "resume",
+    "pdf",
+    "generator",
+    "portfolio"
+  ],
+  "author": "Stefan Kulk",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "nunjucks": "^3.2.4",
+    "puppeteer": "^24.36.1"
+  }
+}

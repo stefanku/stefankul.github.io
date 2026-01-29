@@ -1,0 +1,992 @@
+{
+  "sectionVisibility": {
+    "profile": true,
+    "experience": true,
+    "education": true,
+    "teaching": true,
+    "publications": true,
+    "presentations": true,
+    "media_summary": true,
+    "languages": true,
+    "hobbies": true,
+    "references": true
+  },
+  "personal": {
+    "name": "Stefan Kulk",
+    "credentials": "LL.M., Ph.D.",
+    "location": "Ede, the Netherlands",
+    "phone": "+31 6 1748 7616",
+    "email": "stefank@freedom.nl",
+    "photo": "fotos/portrait1.jpeg",
+    "linkedin": "https://www.linkedin.com/in/stefankulk"
+  },
+  "translations": {
+    "en": {
+      "profile": "Profile",
+      "experience": "Experience",
+      "education": "Education",
+      "teaching": "Teaching & Academic Engagement",
+      "publications": "Selected Publications",
+      "books": "Books",
+      "book_chapters": "Book Chapters",
+      "articles": "Selected Articles",
+      "articles_total": "total",
+      "presentations": "Selected Presentations & Speaking Engagements",
+      "media": "Media",
+      "languages": "Languages",
+      "hobbies": "Hobbies",
+      "references": "References",
+      "references_note": "Contact details available upon request.",
+      "cv_footer": "Curriculum Vitae",
+      "present": "Present",
+      "cv_nav": "CV",
+      "publications_nav": "Publications",
+      "presentations_nav": "Presentations",
+      "view_cv": "View Full CV",
+      "download_pdf": "Download PDF",
+      "publications_desc": "Books, articles, and research papers",
+      "presentations_desc": "Conference talks and speaking engagements",
+      "contact": "Contact",
+      "view_all_experience": "View Full Experience",
+      "recent_publications": "Recent Publications",
+      "book": "Book",
+      "article": "Article",
+      "view_all_publications": "View All Publications",
+      "publications_intro": "Academic publications, books, and research papers",
+      "presentations_intro": "Conference talks, keynotes, and speaking engagements",
+      "all": "All",
+      "view_all_presentations": "View all presentations",
+      "publications_page_title": "Publications",
+      "presentations_page_title": "Presentations & Speaking Engagements",
+      "articles_full": "Articles",
+      "contact_desc": "Connect on LinkedIn"
+    },
+    "nl": {
+      "profile": "Profiel",
+      "experience": "Werkervaring",
+      "education": "Opleiding",
+      "teaching": "Onderwijs & Academische Betrokkenheid",
+      "publications": "Geselecteerde Publicaties",
+      "books": "Boeken",
+      "book_chapters": "Boekbijdragen",
+      "articles": "Geselecteerde Artikelen",
+      "articles_total": "totaal",
+      "presentations": "Geselecteerde Presentaties & Lezingen",
+      "media": "Media",
+      "languages": "Talen",
+      "hobbies": "Hobby's",
+      "references": "Referenties",
+      "references_note": "Contactgegevens op aanvraag beschikbaar.",
+      "cv_footer": "Curriculum Vitae",
+      "present": "Heden",
+      "cv_nav": "CV",
+      "publications_nav": "Publicaties",
+      "presentations_nav": "Presentaties",
+      "view_cv": "Bekijk Volledig CV",
+      "download_pdf": "Download PDF",
+      "publications_desc": "Boeken, artikelen en onderzoekspapers",
+      "presentations_desc": "Congressen en lezingen",
+      "contact": "Contact",
+      "view_all_experience": "Bekijk Volledige Ervaring",
+      "recent_publications": "Recente Publicaties",
+      "book": "Boek",
+      "article": "Artikel",
+      "view_all_publications": "Bekijk Alle Publicaties",
+      "publications_intro": "Academische publicaties, boeken en onderzoekspapers",
+      "presentations_intro": "Congressen, keynotes en lezingen",
+      "all": "Alle",
+      "view_all_presentations": "Bekijk alle presentaties",
+      "publications_page_title": "Publicaties",
+      "presentations_page_title": "Presentaties & Lezingen",
+      "articles_full": "Artikelen",
+      "contact_desc": "Verbind via LinkedIn"
+    }
+  },
+  "profile": {
+    "en": "Experienced legal professional with a strong background in European data protection, AI regulation and new data laws. Coordinating advisor at the Dutch Data Protection Authority (DPA) and former Associate Professor, with a proven track record of leading cross-disciplinary initiatives and providing actionable guidance inside and outside the DPA. Pragmatic and tech-savvy thinker, bridge-builder, and frequent speaker at international forums, events at law firms, and sessions with digital business leaders.",
+    "nl": "Ervaren juridisch professional met een sterke achtergrond in Europese gegevensbescherming, AI-regulering en nieuwe datawetgeving. Coördinerend adviseur bij de Autoriteit Persoonsgegevens en voormalig Universitair Hoofddocent, met een bewezen staat van dienst in het leiden van multidisciplinaire initiatieven en het bieden van praktische begeleiding binnen en buiten de AP. Pragmatische en tech-savvy denker, bruggenbouwer en veelgevraagd spreker op internationale fora, bij advocatenkantoren en sessies met digitale bedrijfsleiders."
+  },
+  "experience": [
+    {
+      "title": {
+        "en": "Senior Coordinating Advisor on AI",
+        "nl": "Senior Coördinerend Adviseur AI"
+      },
+      "company": {
+        "en": "Dutch Data Protection Authority (Autoriteit Persoonsgegevens)",
+        "nl": "Autoriteit Persoonsgegevens"
+      },
+      "location": {
+        "en": "The Hague, NL",
+        "nl": "Den Haag"
+      },
+      "period": {
+        "en": "September 2022 – Present",
+        "nl": "September 2022 – Heden"
+      },
+      "responsibilities": {
+        "en": [
+          "Leading the development of and articulated the Dutch DPA's position on AI supervision. Coordinating the DPA's strategy and policy influencing in preparation of the EU AI Act. Also advising on the supervision of recommender systems under the Digital Services Act.",
+          "Spearheaded the development of the DPA's AI regulatory sandbox (pilot phase), where we have provided hands-on guidance to private sector stakeholders.",
+          "Providing guidance and expert advice within the DPA on the GDPR, the AI Act, and the interpretation of new EU data laws.",
+          "Mentoring junior colleagues in developing legal analyses, practical guidance, and policy influencing.",
+          "Setting up collaboration with other authorities, building networks and sharing expertise on AI supervision with 20+ EU and national regulators, including Swedish authorities (IMY, PTS).",
+          "Delivering keynotes, moderating panels, and facilitating dialogues in (international) forums, conferences and in-house sessions with companies and law firms."
+        ],
+        "nl": [
+          "Leidend in de ontwikkeling en articulering van de positie van de AP over AI-toezicht. Coördineren van de strategie en beleidsbeïnvloeding ter voorbereiding van de EU AI Act. Adviseren over toezicht op aanbevelingssystemen onder de Digital Services Act.",
+          "Ontwikkeling van de AI regulatory sandbox van de AP (pilotfase), met hands-on begeleiding voor private sector stakeholders.",
+          "Advisering en expertise binnen de AP over de AVG, de AI Act en interpretatie van nieuwe EU-datawetgeving.",
+          "Begeleiden van junior collega's bij juridische analyses, praktische guidance en beleidsbeïnvloeding.",
+          "Opzetten van samenwerking met andere autoriteiten, netwerken bouwen en expertise delen over AI-toezicht met 20+ EU en nationale toezichthouders, waaronder Zweedse autoriteiten (IMY, PTS).",
+          "Keynotes, panelmoderatie en dialogen op (internationale) fora, congressen en in-house sessies bij bedrijven en advocatenkantoren."
+        ]
+      }
+    },
+    {
+      "title": {
+        "en": "Associate Professor of Law, Innovation & Technology",
+        "nl": "Universitair Hoofddocent Recht, Innovatie & Technologie"
+      },
+      "company": {
+        "en": "Utrecht University",
+        "nl": "Universiteit Utrecht"
+      },
+      "location": {
+        "en": "Utrecht, NL",
+        "nl": "Utrecht"
+      },
+      "period": {
+        "en": "2020 – 2022",
+        "nl": "2020 – 2022"
+      },
+      "responsibilities": {
+        "en": [
+          "Co-developed, coordinated and taught the Master's program 'Law and Technology in Europe'.",
+          "Designed and taught courses on GDPR, privacy, and regulation of digital services.",
+          "Led research projects on platform regulation, algorithmic decision-making and fundamental rights and AI."
+        ],
+        "nl": [
+          "Mede-ontwikkeld, gecoördineerd en gedoceerd in de Master 'Law and Technology in Europe'.",
+          "Ontworpen en gedoceerd van vakken over AVG, privacy en regulering van digitale diensten.",
+          "Leiding gegeven aan onderzoeksprojecten over platformregulering, algoritmische besluitvorming en grondrechten en AI."
+        ]
+      }
+    },
+    {
+      "title": {
+        "en": "Assistant Professor",
+        "nl": "Universitair Docent"
+      },
+      "company": {
+        "en": "Utrecht University",
+        "nl": "Universiteit Utrecht"
+      },
+      "location": {
+        "en": "Utrecht, NL",
+        "nl": "Utrecht"
+      },
+      "period": {
+        "en": "2015 – 2020",
+        "nl": "2015 – 2020"
+      },
+      "responsibilities": {
+        "en": [
+          "Taught courses on privacy, competition law, and European law.",
+          "Conducted research on data sharing for diversity and inclusion purposes.",
+          "Presented research at venues such as European Commission's DG Connect, Amsterdam Privacy Conference, Bucerius Law School, National Communication Association (U.S.), International Association for Media and Communication Research.",
+          "Visiting researcher at Berkman Klein Center for Internet and Society (Harvard, U.S.); project on online service provider liability."
+        ],
+        "nl": [
+          "Onderwijs gegeven in privacy, mededingingsrecht en Europees recht.",
+          "Onderzoek verricht naar datadeling voor diversiteit en inclusie.",
+          "Onderzoek gepresenteerd bij o.a. Europese Commissie DG Connect, Amsterdam Privacy Conference, Bucerius Law School, National Communication Association (VS), International Association for Media and Communication Research.",
+          "Gastonderzoeker bij Berkman Klein Center for Internet and Society (Harvard, VS); project over aansprakelijkheid van online dienstverleners."
+        ]
+      }
+    },
+    {
+      "title": {
+        "en": "Project Researcher",
+        "nl": "Projectonderzoeker"
+      },
+      "company": {
+        "en": "Delft University of Technology",
+        "nl": "Technische Universiteit Delft"
+      },
+      "location": {
+        "en": "Delft, NL",
+        "nl": "Delft"
+      },
+      "period": {
+        "en": "2014",
+        "nl": "2014"
+      },
+      "responsibilities": {
+        "en": [
+          "Advised utility company Liander on privacy and liability of its open data policies."
+        ],
+        "nl": [
+          "Advisering van netwerkbedrijf Liander over privacy en aansprakelijkheid van open data beleid."
+        ]
+      }
+    },
+    {
+      "title": {
+        "en": "Internships",
+        "nl": "Stages"
+      },
+      "company": {
+        "en": "Pels Rijcken (top-tier Dutch law firm) & Institute for Information Law, Amsterdam",
+        "nl": "Pels Rijcken (landsadvocaat) & Instituut voor Informatierecht, Amsterdam"
+      },
+      "location": null,
+      "period": null,
+      "responsibilities": {
+        "en": [],
+        "nl": []
+      }
+    }
+  ],
+  "education": [
+    {
+      "degree": {
+        "en": "Ph.D. in Platform Liability, Regulation and Copyright Law",
+        "nl": "Promotie (Ph.D.) - Platformaansprakelijkheid, Regulering en Auteursrecht"
+      },
+      "institution": {
+        "en": "Utrecht University",
+        "nl": "Universiteit Utrecht"
+      },
+      "period": "2012 – 2019",
+      "description": {
+        "en": "Comparative legal focus on EU, U.S., German, and Dutch law. The research examined how platform liability rules affect the creative industries and proposed future-proof regulation for services that distribute music, video, and user-generated content online.",
+        "nl": "Rechtsvergelijkend onderzoek naar EU, Amerikaans, Duits en Nederlands recht. Het onderzoek onderzocht hoe aansprakelijkheidsregels voor platforms de creatieve industrie beïnvloeden en stelde toekomstbestendige regulering voor."
+      }
+    },
+    {
+      "degree": {
+        "en": "LL.M. in Information Law",
+        "nl": "LL.M. Informatierecht"
+      },
+      "institution": {
+        "en": "University of Amsterdam",
+        "nl": "Universiteit van Amsterdam"
+      },
+      "period": "2008 – 2010",
+      "description": {
+        "en": "Two-year research master program.",
+        "nl": "Tweejarige onderzoeksmaster."
+      }
+    },
+    {
+      "degree": {
+        "en": "Exchange Program",
+        "nl": "Uitwisselingsprogramma"
+      },
+      "institution": {
+        "en": "Cardozo Law School, New York",
+        "nl": "Cardozo Law School, New York"
+      },
+      "period": "2009",
+      "description": {
+        "en": "Courses on U.S. law, copyright law and trademark law.",
+        "nl": "Vakken over Amerikaans recht, auteursrecht en merkenrecht."
+      }
+    },
+    {
+      "degree": {
+        "en": "LL.B. & LL.M. in Constitutional and Administrative Law",
+        "nl": "Bachelor & Master Staats- en Bestuursrecht"
+      },
+      "institution": {
+        "en": "Leiden University",
+        "nl": "Universiteit Leiden"
+      },
+      "period": "2003 – 2008",
+      "description": null
+    }
+  ],
+  "teaching": {
+    "en": [
+      "Guest lecturer, IViR Privacy Law Summer Course.",
+      "Guest lecturer, Nyenrode Business University — Law & IT: Privacy, digital technologies and compliance.",
+      "Guest lecturer, Leiden University — Executive Program in AI, Law and Ethics.",
+      "Guest lecturer, Erasmus University Rotterdam — Master Law and Technology, in course on AI, democracy and fundamental rights.",
+      "Editorial board member, Dutch Journal for European Law (NtEr).",
+      "Former editorial board member, Dutch Journal for Intellectual Property Law (IER)."
+    ],
+    "nl": [
+      "Gastdocent, IViR Privacy Law Summer Course.",
+      "Gastdocent, Nyenrode Business University — Law & IT: Privacy, digitale technologieën en compliance.",
+      "Gastdocent, Universiteit Leiden — Executive Program in AI, Law and Ethics.",
+      "Gastdocent, Erasmus Universiteit Rotterdam — Master Law and Technology, vak AI, democratie en grondrechten.",
+      "Redactielid, Nederlands Tijdschrift voor Europees Recht (NtEr).",
+      "Voormalig redactielid, tijdschrift Intellectuele Eigendom en Reclamerecht (IER)."
+    ]
+  },
+  "publications": {
+    "books": [
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Internet Intermediaries and Copyright Law: EU and US Perspectives",
+        "year": "2019",
+        "publisher": "Kluwer Law International",
+        "place": "Alphen aan den Rijn",
+        "url": "https://lrus.wolterskluwer.com/store/product/internet-intermediaries-and-copyright-law-eu-and-us-perspectives/"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "S. Van Deursen",
+          "I.M. Boekema",
+          "V.E. Breemen",
+          "S.E. Heeger",
+          "S. Philipsen",
+          "Th. Snijders",
+          "A.H.H. Wouters"
+        ],
+        "title": "Juridische aspecten van algoritmen die besluiten nemen. Een verkennend onderzoek",
+        "year": "2020",
+        "publisher": "Boom Juridische Uitgevers",
+        "place": "Den Haag",
+        "url": "https://www.boomdenhaag.nl/webshop/juridische-aspecten-van-algoritmen-die-besluiten-nemen"
+      }
+    ],
+    "book_chapters": [
+      {
+        "authors": [
+          "S. Kulk",
+          "F.J. Zuiderveen Borgesius"
+        ],
+        "title": "Privacy, Freedom of Expression, and the Right to Be Forgotten in Europe",
+        "publication": "The Cambridge Handbook of Consumer Privacy",
+        "year": "2018",
+        "publisher": "Cambridge University Press",
+        "editors": [
+          "E. Selinger",
+          "J. Polonetsky",
+          "O. Tene"
+        ]
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "The Gravitational Force of the Charter of Fundamental Rights in EU Copyright Law",
+        "publication": "General Principles of EU Law and the EU Digital Order",
+        "year": "2020",
+        "publisher": "Kluwer Law International",
+        "editors": [
+          "U. Bernitz",
+          "X. Groussot",
+          "J. Paju",
+          "S. de Vries"
+        ]
+      },
+      {
+        "authors": [
+          "B. van Loenen",
+          "S. Kulk"
+        ],
+        "title": "De juridische en praktische kaders bij het hergebruiken van digitale publieke geografische informatie",
+        "publication": "Monografie Recht en ICT",
+        "year": "2012",
+        "publisher": "SDU",
+        "editors": [
+          "M. Groothuis"
+        ]
+      }
+    ],
+    "articles": [
+      {
+        "visible": true,
+        "authors": [
+          "J. van der Toorn",
+          "M. Veldhuizen",
+          "S. Kulk"
+        ],
+        "title": "Researching the tension between privacy and inclusion in organisations: Promises and pitfalls of a transdisciplinary approach",
+        "publication": "Tijdschrift voor Genderstudies",
+        "year": "2021",
+        "issue": "1",
+        "pages": "53-63"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Platformaansprakelijkheid – van 'notice and takedown' naar algoritmisch toezicht",
+        "publication": "Nederlands Tijdschrift voor Europees Recht",
+        "year": "2020",
+        "issue": "5-6",
+        "pages": "132-140"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "P. Teunissen"
+        ],
+        "title": "Naar een nieuw fundament - hoe het Handvest het auteursrecht hervormt (Deel 1 & 2)",
+        "publication": "AMI - Tijdschrift voor Auteurs-, Media- & Informatierecht",
+        "year": "2019",
+        "issue": "4-5",
+        "pages": "121-149"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Deze amuse is niet langer beschikbaar - Over auteursrecht en algoritmes",
+        "publication": "Ars Aequi",
+        "year": "2019",
+        "issue": "1",
+        "pages": "6"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Het persuitgeversrecht – You ain't seen nothing yet",
+        "publication": "Intellectuele Eigendom en Reclamerecht",
+        "year": "2019",
+        "issue": "6",
+        "pages": "335"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Examenantwoorden zijn ook persoonsgegevens - Over de reikwijdte van de AVG",
+        "publication": "Nederlands Tijdschrift voor Europees Recht",
+        "year": "2018",
+        "issue": "5",
+        "pages": "205"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "De aansprakelijkheid van platforms voor auteursrechtinbreuken",
+        "publication": "Intellectuele Eigendom en Reclamerecht",
+        "year": "2017",
+        "issue": "6",
+        "pages": "432"
+      },
+      {
+        "authors": [
+          "B. van Loenen",
+          "S. Kulk",
+          "H. Ploeger"
+        ],
+        "title": "Data protection legislation: A very hungry caterpillar: The case of mapping data in the European Union",
+        "publication": "Government Information Quarterly",
+        "year": "2016",
+        "issue": "2",
+        "pages": "338"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "F.J. Zuiderveen Borgesius"
+        ],
+        "title": "Freedom of expression and 'right to be forgotten' cases in the Netherlands after Google Spain",
+        "publication": "European Data Protection Law Review",
+        "year": "2015",
+        "issue": "2",
+        "pages": "113"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "F.J. Zuiderveen Borgesius"
+        ],
+        "title": "De implicaties van het Google Spain-arrest voor de vrijheid van meningsuiting",
+        "publication": "NTM/NJCM-Bulletin",
+        "year": "2015",
+        "issue": "1",
+        "pages": "3"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "F.J. Zuiderveen Borgesius"
+        ],
+        "title": "Google Spain v. Gonzalez: did the court forget about freedom of expression?",
+        "publication": "European Journal of Risk Regulation",
+        "year": "2014",
+        "issue": "2",
+        "pages": "389"
+      },
+      {
+        "authors": [
+          "M. de Cock Buning",
+          "S. Kulk"
+        ],
+        "title": "3D printen: 'Attack of the Clones' of 'A New Hope?",
+        "publication": "Intellectuele Eigendom en Reclamerecht",
+        "year": "2014",
+        "issue": "3",
+        "pages": "309"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "F.J. Zuiderveen Borgesius"
+        ],
+        "title": "Filtering for Copyright Enforcement in Europe after the Sabam cases",
+        "publication": "European Intellectual Property Review",
+        "year": "2012",
+        "issue": "1",
+        "pages": "54"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "B. van Loenen"
+        ],
+        "title": "Brave New Open Data World?",
+        "publication": "International Journal of Spatial Data Infrastructures Research",
+        "year": "2012",
+        "issue": "1",
+        "pages": "196"
+      },
+      {
+        "authors": [
+          "S. Kulk"
+        ],
+        "title": "Search Engines - Searching for Trouble?",
+        "publication": "European Intellectual Property Review",
+        "year": "2011",
+        "issue": "10",
+        "pages": "607"
+      }
+    ],
+    "reports": [
+      {
+        "authors": [
+          "S. Kulk",
+          "S. Van Deursen",
+          "et al."
+        ],
+        "title": "Juridische aspecten van algoritmen die besluiten nemen. Een verkennend onderzoek",
+        "year": "2020",
+        "publisher": "WODC",
+        "url": "https://www.wodc.nl/binaries/2947_volledige_tekst_tcm28-452340.pdf"
+      },
+      {
+        "authors": [
+          "L. Belder",
+          "H. Temmink",
+          "S. Kulk",
+          "et al."
+        ],
+        "title": "FIDE National Report of the Netherlands - Digital Media",
+        "year": "2018",
+        "publisher": "FIDE"
+      },
+      {
+        "authors": [
+          "S. Kulk",
+          "B. van Loenen",
+          "H. Ploeger"
+        ],
+        "title": "Open data and beyond: Exploring existing open data projects to prepare a successful open data strategy",
+        "year": "2012",
+        "publisher": "TU Delft"
+      }
+    ]
+  },
+  "presentations": [
+    {
+      "visible": true,
+      "title": {
+        "en": "Ethics in a World of Automation – Risks for Humans and Organisations",
+        "nl": "Ethiek in een wereld van automatisering – Risico's voor mensen en organisaties"
+      },
+      "event": "Nordic Privacy Arena 2025",
+      "location": "Stockholm",
+      "date": "September 2025",
+      "type": "panel",
+      "role": {
+        "en": "Panelist",
+        "nl": "Panellid"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "AI-Act Sandbox Pilot: Collaboration in Practice",
+        "nl": "AI-Act Sandboxpilot: Samenwerken in de praktijk"
+      },
+      "event": "SDT Symposium",
+      "location": "The Hague (Amare)",
+      "date": "September 2025",
+      "type": "panel",
+      "role": {
+        "en": "Moderator",
+        "nl": "Moderator"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "High Level Panel AI Act",
+        "nl": "High Level Panel AI Act"
+      },
+      "event": "ALLAI RAI Conference 2024",
+      "location": "Amsterdam",
+      "date": "2024",
+      "type": "panel",
+      "role": {
+        "en": "Panelist",
+        "nl": "Panellid"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "The DPA and Supervision on the AI Regulation",
+        "nl": "De AP en het toezicht op de AI-verordening"
+      },
+      "event": "Iuris Legal Congress",
+      "location": "Netherlands",
+      "date": "2024",
+      "type": "workshop",
+      "role": {
+        "en": "Workshop Leader",
+        "nl": "Workshopleider"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Privacy Law and Practice",
+        "nl": "Privacy Law and Practice"
+      },
+      "event": "IViR Summer Course on Privacy Law and Practice",
+      "location": "Amsterdam",
+      "date": "2024",
+      "type": "lecture",
+      "role": {
+        "en": "Faculty / Guest Lecturer",
+        "nl": "Gastdocent"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "CPDP Conference 2025",
+        "nl": "CPDP Conferentie 2025"
+      },
+      "event": "Computers, Privacy and Data Protection Conference",
+      "location": "Brussels",
+      "date": "2025",
+      "type": "conference",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "A Regulator's View on the AI Act",
+        "nl": "De AI Act vanuit toezichthoudersperspectief"
+      },
+      "event": "Taylor Wessing \"Tech Me Up!\" Session",
+      "location": "Amsterdam",
+      "date": "September 2024",
+      "type": "seminar",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Dealing with Uncertainty in Algorithms and AI",
+        "nl": "Omgaan met onzekerheid bij algoritmen en AI"
+      },
+      "event": "AP Algoritme Seminar",
+      "location": "Utrecht",
+      "date": "February 2024",
+      "type": "seminar",
+      "role": {
+        "en": "Organizer / Speaker",
+        "nl": "Organisator / Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Responsible AI from a Regulatory Perspective",
+        "nl": "Responsible AI vanuit toezichthoudersperspectief"
+      },
+      "event": "DDMA Industry Meetup: Responsible AI",
+      "location": "Amsterdam",
+      "date": "March 2024",
+      "type": "meetup",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Panel Discussion on AI and Privacy",
+        "nl": "Paneldiscussie over AI en Privacy"
+      },
+      "event": "Internet Thesis Award - Brinkhof",
+      "location": "Amsterdam",
+      "date": "October 2023",
+      "type": "panel",
+      "role": {
+        "en": "Panelist",
+        "nl": "Panellid"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Supervision in a Digital Society",
+        "nl": "Toezicht op een digitale samenleving"
+      },
+      "event": "NVER STER Event",
+      "location": "The Hague",
+      "date": "November 2023",
+      "type": "panel",
+      "role": {
+        "en": "Panelist",
+        "nl": "Panellid"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Follow the Data",
+        "nl": "Follow the Data"
+      },
+      "event": "JPAN Congress",
+      "location": "Amsterdam",
+      "date": "September 2023",
+      "type": "conference",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "AI and Enforcement",
+        "nl": "AI en handhaving"
+      },
+      "event": "Jean Monnet Network EULEN Roundtable - EU Law Enforcement",
+      "location": "Brussels (Dutch Permanent Representation to EU)",
+      "date": "September 2023",
+      "type": "panel",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Supervision on Algorithms",
+        "nl": "Toezicht op algoritmes"
+      },
+      "event": "NVvIR Voorjaarsvergadering",
+      "location": "The Hague (KIVI)",
+      "date": "April 2023",
+      "type": "conference",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "AI Regulation for Privacy Professionals",
+        "nl": "AI-verordening voor privacy professionals"
+      },
+      "event": "CIP-Overheid Webinar",
+      "location": "Online",
+      "date": "2023",
+      "type": "webinar",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "AI and Algorithms in Practice",
+        "nl": "AI en algoritmen in de praktijk"
+      },
+      "event": "Van Benthem & Keulen AI Seminar",
+      "location": "Utrecht",
+      "date": "2023",
+      "type": "seminar",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Algorithmic Content Moderation",
+        "nl": "Algoritmische contentmoderatie"
+      },
+      "event": "UU Governing the Digital Society Expert Meeting",
+      "location": "Online",
+      "date": "September 2020",
+      "type": "workshop",
+      "role": {
+        "en": "Host / Organizer",
+        "nl": "Host / Organisator"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "European Fundamental Rights: Technology and Algorithms",
+        "nl": "Actualiteiten Europese grondrechten: Technologie en algoritmes"
+      },
+      "event": "Pels Rijcken Seminar",
+      "location": "The Hague (New Babylon)",
+      "date": "August 2020",
+      "type": "seminar",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "New Technology and Copyright - Schranken vs Fair Use",
+        "nl": "Nieuwe technologie en auteursrecht - Schranken vs Fair Use"
+      },
+      "event": "Young Scholars IP Lecture Series, Bucerius Law School",
+      "location": "Hamburg",
+      "date": "February 2018",
+      "type": "lecture",
+      "role": {
+        "en": "Lecturer",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Liability of Internet Intermediaries",
+        "nl": "Aansprakelijkheid van internetintermediairs"
+      },
+      "event": "Young Scholars IP Lecture Series, Bucerius Law School",
+      "location": "Hamburg",
+      "date": "January 2016",
+      "type": "lecture",
+      "role": {
+        "en": "Lecturer",
+        "nl": "Spreker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Law Enforcement and ISP Liability",
+        "nl": "Rechtshandhaving en ISP-aansprakelijkheid"
+      },
+      "event": "NILG Conference 'Law and Governance in the Digital Era'",
+      "location": "Amsterdam (West Indisch Huis)",
+      "date": "November 2015",
+      "type": "panel",
+      "role": {
+        "en": "Panelist",
+        "nl": "Panellid"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Platform Liability and Copyright",
+        "nl": "Platformaansprakelijkheid en auteursrecht"
+      },
+      "event": "Berkman Klein Center for Internet and Society, Harvard University",
+      "location": "Cambridge, MA (USA)",
+      "date": "2017",
+      "type": "research",
+      "role": {
+        "en": "Visiting Researcher Presentation",
+        "nl": "Presentatie als gastonderzoeker"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Online Platform Regulation",
+        "nl": "Regulering van online platforms"
+      },
+      "event": "European Commission DG Connect",
+      "location": "Brussels",
+      "date": "2018",
+      "type": "policy",
+      "role": {
+        "en": "Invited Expert",
+        "nl": "Uitgenodigde expert"
+      }
+    },
+    {
+      "visible": true,
+      "title": {
+        "en": "Privacy and Data Protection Research",
+        "nl": "Privacy en gegevensbescherming onderzoek"
+      },
+      "event": "Amsterdam Privacy Conference",
+      "location": "Amsterdam",
+      "date": "2017",
+      "type": "conference",
+      "role": {
+        "en": "Speaker",
+        "nl": "Spreker"
+      }
+    }
+  ],
+  "media_summary": {
+    "en": "Former media contributor with appearances in Dutch national media (NOS, Nieuwsuur, Trouw, NRC, de Volkskrant, Financieel Dagblad, NPO Radio 1) and international outlets (The Guardian, CNN, International Business Times) on topics including platform regulation, privacy, GDPR, and content moderation.",
+    "nl": "Voormalig mediacontribuant met optredens in Nederlandse nationale media (NOS, Nieuwsuur, Trouw, NRC, de Volkskrant, Financieel Dagblad, NPO Radio 1) en internationale media (The Guardian, CNN, International Business Times) over onderwerpen als platformregulering, privacy, AVG en contentmoderatie."
+  },
+  "languages": {
+    "en": "Dutch (native), English (fluent), German (working proficiency), Swedish (Duolingo-level)",
+    "nl": "Nederlands (moedertaal), Engels (vloeiend), Duits (werkbekwaamheid), Zweeds (Duolingo-niveau)"
+  },
+  "hobbies": {
+    "en": "Exploring nature with our two boys; amateur-coding and cycling.",
+    "nl": "De natuur verkennen met onze twee jongens; hobby-programmeren en fietsen."
+  },
+  "references": [
+    {
+      "name": "Madeleine de Cock Buning",
+      "title": {
+        "en": "Vice-President, Global Affairs EMEA, Netflix",
+        "nl": "Vice-President, Global Affairs EMEA, Netflix"
+      }
+    },
+    {
+      "name": "Kevin van 't Klooster",
+      "title": {
+        "en": "Global Head of Privacy & Product Legal, Snap",
+        "nl": "Global Head of Privacy & Product Legal, Snap"
+      }
+    }
+  ]
+}

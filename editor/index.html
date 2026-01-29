@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Editor</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/editor/styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a365d',
+                        accent: '#2c5282',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div id="app">
+        <!-- Top Bar -->
+        <header class="bg-primary text-white px-6 py-3 flex items-center justify-between shadow-lg sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <h1 class="text-xl font-semibold">CV Editor</h1>
+                <span v-if="hasUnsavedChanges" class="text-yellow-300 text-sm">
+                    (unsaved changes)
+                </span>
+                <span v-if="saving" class="text-blue-300 text-sm">
+                    Saving...
+                </span>
+            </div>
+            <div class="flex items-center gap-3">
+                <button @click="saveData"
+                        :disabled="saving || !hasUnsavedChanges"
+                        class="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 disabled:cursor-not-allowed rounded font-medium transition-colors">
+                    Save
+                </button>
+                <button @click="generatePDF('en')"
+                        :disabled="generatingPDF"
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 rounded font-medium transition-colors">
+                    PDF EN
+                </button>
+                <button @click="generatePDF('nl')"
+                        :disabled="generatingPDF"
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 rounded font-medium transition-colors">
+                    PDF NL
+                </button>
+            </div>
+        </header>
+
+        <!-- Loading State -->
+        <div v-if="loading" class="flex items-center justify-center h-[calc(100vh-60px)]">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                <p class="text-gray-600">Loading CV data...</p>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="flex items-center justify-center h-[calc(100vh-60px)]">
+            <div class="text-center bg-red-50 p-6 rounded-lg">
+                <p class="text-red-600 font-medium mb-2">Error loading data</p>
+                <p class="text-gray-600">{{ error }}</p>
+                <button @click="loadData" class="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-accent">
+                    Retry
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div v-else class="flex h-[calc(100vh-60px)]">
+            <!-- Editor Panel -->
+            <div class="w-1/2 overflow-y-auto p-6 space-y-6">
+                <!-- Personal Info Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Personal Info</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                            <input v-model="data.personal.name" type="text"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Credentials</label>
+                            <input v-model="data.personal.credentials" type="text"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                            <input v-model="data.personal.location" type="text"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                            <input v-model="data.personal.phone" type="text"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input v-model="data.personal.email" type="email"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Photo</label>
+                            <div class="flex items-center gap-2">
+                                <input v-model="data.personal.photo" type="text" readonly
+                                       class="flex-1 px-3 py-2 border border-gray-300 rounded bg-gray-50">
+                                <label class="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded cursor-pointer text-sm">
+                                    Upload
+                                    <input type="file" accept="image/*" @change="uploadPhoto" class="hidden">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Visibility -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Section Visibility</h2>
+                    <div class="grid grid-cols-3 gap-3">
+                        <label v-for="(visible, section) in data.sectionVisibility" :key="section"
+                               class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" v-model="data.sectionVisibility[section]"
+                                   class="w-4 h-4 text-primary rounded focus:ring-primary">
+                            <span class="text-sm capitalize">{{ formatSectionName(section) }}</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Profile Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Profile</h2>
+                    <bilingual-textarea v-model:en="data.profile.en" v-model:nl="data.profile.nl"
+                                        :rows="4" placeholder="Profile summary..."></bilingual-textarea>
+                </section>
+
+                <!-- Experience Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2">
+                        <h2 class="text-lg font-semibold text-primary">Experience</h2>
+                        <button @click="addExperience" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                            + Add
+                        </button>
+                    </div>
+                    <div ref="experienceList" class="space-y-4">
+                        <div v-for="(job, index) in data.experience" :key="index"
+                             :class="['border rounded-lg p-4', job.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                            <div class="flex items-start gap-2 mb-3">
+                                <input type="checkbox" :checked="job.visible !== false"
+                                       @change="job.visible = $event.target.checked"
+                                       class="mt-1.5 w-4 h-4 text-primary rounded focus:ring-primary"
+                                       title="Show in CV">
+                                <span class="drag-handle cursor-move text-gray-400 hover:text-gray-600 mt-1">&#x2630;</span>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium text-sm text-gray-700">{{ job.title?.en || 'New Position' }}</span>
+                                        <div class="flex items-center gap-1">
+                                            <button @click="toggleExpand('exp', index)"
+                                                    class="p-1 text-gray-500 hover:text-primary">
+                                                <span v-if="expanded.exp[index]">&#9660;</span>
+                                                <span v-else>&#9654;</span>
+                                            </button>
+                                            <button @click="duplicateItem('experience', index)"
+                                                    class="p-1 text-gray-500 hover:text-blue-600" title="Duplicate">
+                                                &#128203;
+                                            </button>
+                                            <button @click="removeItem('experience', index)"
+                                                    class="p-1 text-gray-500 hover:text-red-600" title="Remove">
+                                                &#128465;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-show="expanded.exp[index]" class="space-y-3 ml-6">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <bilingual-input v-model:en="job.title.en" v-model:nl="job.title.nl"
+                                                     label="Job Title"></bilingual-input>
+                                    <bilingual-input v-model:en="job.company.en" v-model:nl="job.company.nl"
+                                                     label="Company"></bilingual-input>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <bilingual-input v-model:en="job.location.en" v-model:nl="job.location.nl"
+                                                     label="Location"></bilingual-input>
+                                    <bilingual-input v-model:en="job.period.en" v-model:nl="job.period.nl"
+                                                     label="Period"></bilingual-input>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Responsibilities</label>
+                                    <bilingual-list v-model:en="job.responsibilities.en"
+                                                    v-model:nl="job.responsibilities.nl"></bilingual-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Education Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2">
+                        <h2 class="text-lg font-semibold text-primary">Education</h2>
+                        <button @click="addEducation" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                            + Add
+                        </button>
+                    </div>
+                    <div ref="educationList" class="space-y-4">
+                        <div v-for="(edu, index) in data.education" :key="index"
+                             :class="['border rounded-lg p-4', edu.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                            <div class="flex items-start gap-2 mb-3">
+                                <input type="checkbox" :checked="edu.visible !== false"
+                                       @change="edu.visible = $event.target.checked"
+                                       class="mt-1.5 w-4 h-4 text-primary rounded focus:ring-primary"
+                                       title="Show in CV">
+                                <span class="drag-handle cursor-move text-gray-400 hover:text-gray-600 mt-1">&#x2630;</span>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-medium text-sm text-gray-700">{{ edu.degree?.en || 'New Education' }}</span>
+                                        <div class="flex items-center gap-1">
+                                            <button @click="toggleExpand('edu', index)"
+                                                    class="p-1 text-gray-500 hover:text-primary">
+                                                <span v-if="expanded.edu[index]">&#9660;</span>
+                                                <span v-else>&#9654;</span>
+                                            </button>
+                                            <button @click="duplicateItem('education', index)"
+                                                    class="p-1 text-gray-500 hover:text-blue-600" title="Duplicate">
+                                                &#128203;
+                                            </button>
+                                            <button @click="removeItem('education', index)"
+                                                    class="p-1 text-gray-500 hover:text-red-600" title="Remove">
+                                                &#128465;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-show="expanded.edu[index]" class="space-y-3 ml-6">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <bilingual-input v-model:en="edu.degree.en" v-model:nl="edu.degree.nl"
+                                                     label="Degree"></bilingual-input>
+                                    <bilingual-input v-model:en="edu.institution.en" v-model:nl="edu.institution.nl"
+                                                     label="Institution"></bilingual-input>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Period</label>
+                                        <input v-model="edu.period" type="text"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    </div>
+                                </div>
+                                <bilingual-textarea v-model:en="edu.description.en" v-model:nl="edu.description.nl"
+                                                    label="Description" :rows="2"></bilingual-textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Teaching Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Teaching & Academic Engagement</h2>
+                    <bilingual-list v-model:en="data.teaching.en" v-model:nl="data.teaching.nl"></bilingual-list>
+                </section>
+
+                <!-- Publications Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Publications</h2>
+
+                    <!-- Books -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">
+                                Books
+                                <span v-if="data.publications.books?.length" class="text-gray-500 text-sm">
+                                    ({{ data.publications.books?.filter(b => b.visible !== false).length || 0 }} visible)
+                                </span>
+                            </h3>
+                            <button @click="addPublication('books')" class="px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700">
+                                + Add Book
+                            </button>
+                        </div>
+                        <div class="space-y-3">
+                            <div v-for="(book, index) in data.publications.books" :key="index"
+                                 :class="['border rounded p-3', book.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" :checked="book.visible !== false"
+                                               @change="book.visible = $event.target.checked"
+                                               class="w-4 h-4 text-primary rounded focus:ring-primary"
+                                               title="Show in CV">
+                                        <span class="text-sm font-medium">{{ book.title || 'New Book' }}</span>
+                                    </div>
+                                    <button @click="removePublication('books', index)"
+                                            class="text-gray-400 hover:text-red-600">&#128465;</button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <input v-model="book.title" placeholder="Title"
+                                           class="col-span-2 px-2 py-1 border rounded">
+                                    <input v-model="book.authors" placeholder="Authors (comma-separated)"
+                                           class="col-span-2 px-2 py-1 border rounded"
+                                           @blur="parseAuthors(book, $event)">
+                                    <input v-model="book.year" placeholder="Year" class="px-2 py-1 border rounded">
+                                    <input v-model="book.publisher" placeholder="Publisher" class="px-2 py-1 border rounded">
+                                    <input v-model="book.place" placeholder="Place" class="px-2 py-1 border rounded">
+                                    <input v-model="book.url" placeholder="URL" class="px-2 py-1 border rounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Book Chapters -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">
+                                Book Chapters
+                                <span v-if="data.publications.book_chapters?.length" class="text-gray-500 text-sm">
+                                    ({{ data.publications.book_chapters?.filter(c => c.visible !== false).length || 0 }} visible)
+                                </span>
+                            </h3>
+                            <button @click="addPublication('book_chapters')" class="px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700">
+                                + Add Chapter
+                            </button>
+                        </div>
+                        <div class="space-y-3">
+                            <div v-for="(chapter, index) in data.publications.book_chapters" :key="index"
+                                 :class="['border rounded p-3', chapter.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="flex items-center gap-2">
+                                        <input type="checkbox" :checked="chapter.visible !== false"
+                                               @change="chapter.visible = $event.target.checked"
+                                               class="w-4 h-4 text-primary rounded focus:ring-primary"
+                                               title="Show in CV">
+                                        <span class="text-sm font-medium">{{ chapter.title || 'New Chapter' }}</span>
+                                    </div>
+                                    <button @click="removePublication('book_chapters', index)"
+                                            class="text-gray-400 hover:text-red-600">&#128465;</button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <input v-model="chapter.title" placeholder="Chapter Title" class="col-span-2 px-2 py-1 border rounded">
+                                    <input v-model="chapter.authorsStr" placeholder="Authors"
+                                           class="col-span-2 px-2 py-1 border rounded"
+                                           @blur="parseAuthors(chapter, $event)">
+                                    <input v-model="chapter.publication" placeholder="Book Title" class="col-span-2 px-2 py-1 border rounded">
+                                    <input v-model="chapter.year" placeholder="Year" class="px-2 py-1 border rounded">
+                                    <input v-model="chapter.publisher" placeholder="Publisher" class="px-2 py-1 border rounded">
+                                    <input v-model="chapter.editorsStr" placeholder="Editors" class="col-span-2 px-2 py-1 border rounded"
+                                           @blur="parseEditors(chapter, $event)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Articles -->
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-medium text-gray-700">
+                                Articles
+                                <span class="text-gray-500 text-sm">
+                                    ({{ data.publications.articles?.filter(a => a.visible !== false).length || 0 }} visible / {{ data.publications.articles?.length || 0 }} total)
+                                </span>
+                            </h3>
+                            <button @click="addPublication('articles')" class="px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700">
+                                + Add Article
+                            </button>
+                        </div>
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <div v-for="(article, index) in data.publications.articles" :key="index"
+                                 :class="['border rounded p-3', article.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="flex items-center gap-2 flex-1 min-w-0">
+                                        <input type="checkbox" :checked="article.visible !== false"
+                                               @change="article.visible = $event.target.checked"
+                                               class="w-4 h-4 text-primary rounded focus:ring-primary flex-shrink-0"
+                                               title="Show in CV">
+                                        <span class="text-sm font-medium truncate">{{ article.title || 'New Article' }}</span>
+                                    </div>
+                                    <button @click="removePublication('articles', index)"
+                                            class="text-gray-400 hover:text-red-600 ml-2">&#128465;</button>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-sm">
+                                    <input v-model="article.title" placeholder="Title" class="col-span-2 px-2 py-1 border rounded">
+                                    <input v-model="article.authorsStr" placeholder="Authors"
+                                           class="col-span-2 px-2 py-1 border rounded"
+                                           @blur="parseAuthors(article, $event)">
+                                    <input v-model="article.publication" placeholder="Journal" class="col-span-2 px-2 py-1 border rounded">
+                                    <input v-model="article.year" placeholder="Year" class="px-2 py-1 border rounded">
+                                    <input v-model="article.issue" placeholder="Issue" class="px-2 py-1 border rounded">
+                                    <input v-model="article.pages" placeholder="Pages" class="px-2 py-1 border rounded">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Presentations Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2">
+                        <h2 class="text-lg font-semibold text-primary">
+                            Presentations & Speaking
+                            <span v-if="data.presentations?.length" class="text-gray-500 text-sm">
+                                ({{ data.presentations?.filter(p => p.visible !== false).length || 0 }} visible / {{ data.presentations?.length || 0 }} total)
+                            </span>
+                        </h2>
+                        <button @click="addPresentation" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                            + Add
+                        </button>
+                    </div>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        <div v-for="(pres, index) in data.presentations" :key="index"
+                             :class="['border rounded p-3', pres.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center gap-2 flex-1 min-w-0">
+                                    <input type="checkbox" :checked="pres.visible !== false"
+                                           @change="pres.visible = $event.target.checked"
+                                           class="w-4 h-4 text-primary rounded focus:ring-primary flex-shrink-0"
+                                           title="Show in CV">
+                                    <span class="text-sm font-medium truncate">{{ pres.title?.en || 'New Presentation' }}</span>
+                                </div>
+                                <button @click="removePresentation(index)"
+                                        class="text-gray-400 hover:text-red-600 ml-2">&#128465;</button>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <bilingual-input v-model:en="pres.title.en" v-model:nl="pres.title.nl"
+                                                 label="Title" size="small" class="col-span-2"></bilingual-input>
+                                <input v-model="pres.event" placeholder="Event name"
+                                       class="col-span-2 px-2 py-1 border rounded">
+                                <input v-model="pres.location" placeholder="Location"
+                                       class="px-2 py-1 border rounded">
+                                <input v-model="pres.date" placeholder="Date (e.g. March 2024)"
+                                       class="px-2 py-1 border rounded">
+                                <select v-model="pres.type" class="px-2 py-1 border rounded">
+                                    <option value="conference">Conference</option>
+                                    <option value="seminar">Seminar</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="webinar">Webinar</option>
+                                    <option value="lecture">Lecture</option>
+                                    <option value="panel">Panel</option>
+                                    <option value="meetup">Meetup</option>
+                                    <option value="policy">Policy Briefing</option>
+                                    <option value="research">Research Presentation</option>
+                                </select>
+                                <bilingual-input v-model:en="pres.role.en" v-model:nl="pres.role.nl"
+                                                 label="Role" size="small"></bilingual-input>
+                            </div>
+                        </div>
+                        <div v-if="!data.presentations?.length" class="text-center text-gray-400 py-4">
+                            No presentations yet. Click "+ Add" to add one.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Media Summary Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Media Summary</h2>
+                    <bilingual-textarea v-model:en="data.media_summary.en" v-model:nl="data.media_summary.nl"
+                                        :rows="3" placeholder="Media appearances summary..."></bilingual-textarea>
+                </section>
+
+                <!-- Languages & Hobbies Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <h2 class="text-lg font-semibold text-primary mb-4 border-b pb-2">Languages & Hobbies</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <bilingual-textarea v-model:en="data.languages.en" v-model:nl="data.languages.nl"
+                                                label="Languages" :rows="2"></bilingual-textarea>
+                        </div>
+                        <div>
+                            <bilingual-textarea v-model:en="data.hobbies.en" v-model:nl="data.hobbies.nl"
+                                                label="Hobbies" :rows="2"></bilingual-textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- References Section -->
+                <section class="bg-white rounded-lg shadow p-4">
+                    <div class="flex items-center justify-between mb-4 border-b pb-2">
+                        <h2 class="text-lg font-semibold text-primary">References</h2>
+                        <button @click="addReference" class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
+                            + Add
+                        </button>
+                    </div>
+                    <div class="space-y-3">
+                        <div v-for="(ref, index) in data.references" :key="index"
+                             :class="['border rounded p-3', ref.visible === false ? 'border-gray-300 bg-gray-100 opacity-60' : 'border-gray-200 bg-gray-50']">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="checkbox" :checked="ref.visible !== false"
+                                           @change="ref.visible = $event.target.checked"
+                                           class="w-4 h-4 text-primary rounded focus:ring-primary"
+                                           title="Show in CV">
+                                    <span class="font-medium text-sm">{{ ref.name || 'New Reference' }}</span>
+                                </div>
+                                <button @click="removeItem('references', index)"
+                                        class="text-gray-400 hover:text-red-600">&#128465;</button>
+                            </div>
+                            <div class="grid grid-cols-1 gap-2">
+                                <input v-model="ref.name" placeholder="Name"
+                                       class="px-2 py-1 border rounded text-sm">
+                                <bilingual-input v-model:en="ref.title.en" v-model:nl="ref.title.nl"
+                                                 label="Title" size="small"></bilingual-input>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="w-1/2 bg-gray-200 p-4 flex flex-col">
+                <div class="bg-white rounded-lg shadow flex-1 flex flex-col overflow-hidden">
+                    <div class="flex items-center justify-between p-3 border-b">
+                        <h2 class="font-semibold text-gray-700">Live Preview</h2>
+                        <div class="flex items-center gap-2">
+                            <button @click="previewLang = 'en'"
+                                    :class="['px-3 py-1 rounded text-sm font-medium transition-colors',
+                                             previewLang === 'en' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300']">
+                                EN
+                            </button>
+                            <button @click="previewLang = 'nl'"
+                                    :class="['px-3 py-1 rounded text-sm font-medium transition-colors',
+                                             previewLang === 'nl' ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300']">
+                                NL
+                            </button>
+                            <button @click="refreshPreview"
+                                    class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm hover:bg-gray-300"
+                                    title="Refresh preview">
+                                &#8635;
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-auto p-2 bg-gray-100">
+                        <iframe ref="previewFrame"
+                                class="w-full bg-white shadow-lg mx-auto"
+                                style="height: 1200px; max-width: 800px; transform-origin: top center;"
+                                :style="{ transform: `scale(${previewScale})` }"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="fixed bottom-4 right-4 space-y-2 z-50">
+            <div v-for="(toast, index) in toasts" :key="index"
+                 :class="['px-4 py-3 rounded-lg shadow-lg text-white transition-all transform',
+                          toast.type === 'success' ? 'bg-green-600' : 'bg-red-600']">
+                {{ toast.message }}
+            </div>
+        </div>
+    </div>
+
+    <script src="/editor/app.js"></script>
+</body>
+</html>

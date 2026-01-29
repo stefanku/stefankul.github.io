@@ -1,0 +1,47 @@
+{% extends "portfolio_base.html" %}
+
+{% set page = 'presentations' %}
+{% set altLangUrl = (lang == 'en') and 'nl.html' or 'index.html' %}
+
+{% block title %}{{ t.presentations_page_title | default('Presentations') }} - {{ personal.name }}{% endblock %}
+
+{% block content %}
+<section class="section presentations-page">
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">{{ t.presentations_page_title | default('Presentations') }}</h1>
+            <p class="page-subtitle">{{ t.presentations_intro | default('Conference talks, keynotes, and speaking engagements') }}</p>
+        </header>
+
+        {% if presentationsByYear %}
+        <div class="presentations-grouped">
+            {% for group in presentationsByYear %}
+            <div class="year-group">
+                <h2 class="year-heading">{{ group.year }}</h2>
+                <div class="presentations-list">
+                    {% for pres in group.items %}{% if pres.visible != false %}
+                    <article class="presentation-card">
+                        <div class="presentation-content">
+                            <h3 class="presentation-title">{{ pres.title }}</h3>
+                            <div class="presentation-meta">
+                                <span class="presentation-event">{{ pres.event }}</span>
+                                <span class="presentation-location">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    {{ pres.location }}
+                                </span>
+                            </div>
+                            <p class="presentation-role">{{ pres.role }}</p>
+                        </div>
+                    </article>
+                    {% endif %}{% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
