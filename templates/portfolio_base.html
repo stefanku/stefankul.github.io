@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ personal.name }}{% endblock %}</title>
     <meta name="description" content="{% block description %}{{ personal.name }}, {{ personal.credentials }} - Professional Portfolio{% endblock %}">
-
-    <link rel="stylesheet" href="{{ basePath }}{% if basePath %}/{% endif %}assets/css/portfolio.css">
-
+    <link rel="stylesheet" href="{{ basePath }}/assets/css/portfolio.css">
     {% block head %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <a href="{{ basePath }}{% if basePath %}/{% endif %}index.html" class="nav-logo">
+            <a href="{{ basePath }}/{% if lang != 'en' %}{{ lang }}/{% endif %}index.html" class="nav-logo">
                 <span class="nav-name">{{ personal.name }}</span>
             </a>
 
@@ -27,17 +25,17 @@
             <div class="nav-menu" id="nav-menu">
                 <ul class="nav-list">
                     <li class="nav-item">
-                        <a href="{{ basePath }}{% if basePath %}/{% endif %}cv/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="nav-link{% if page == 'cv' %} active{% endif %}">
+                        <a href="{{ basePath }}/cv/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="nav-link{% if page == 'cv' %} active{% endif %}">
                             {{ t.cv_nav | default('CV') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ basePath }}{% if basePath %}/{% endif %}publications/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="nav-link{% if page == 'publications' %} active{% endif %}">
+                        <a href="{{ basePath }}/publications/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="nav-link{% if page == 'publications' %} active{% endif %}">
                             {{ t.publications_nav | default('Publications') }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ basePath }}{% if basePath %}/{% endif %}presentations/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="nav-link{% if page == 'presentations' %} active{% endif %}">
+                        <a href="{{ basePath }}/presentations/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="nav-link{% if page == 'presentations' %} active{% endif %}">
                             {{ t.presentations_nav | default('Presentations') }}
                         </a>
                     </li>
@@ -45,9 +43,11 @@
 
                 <div class="nav-actions">
                     <!-- Language Switch -->
-                    <a href="{{ altLangUrl | default('#') }}" class="lang-switch" title="{{ altLangLabel }}">
-                        {{ altLang | upper }}
-                    </a>
+                    {% if lang == 'en' %}
+                    <a href="{{ basePath }}/nl/index.html" class="lang-switch" title="{{ altLangLabel }}">NL</a>
+                    {% else %}
+                    <a href="{{ basePath }}/index.html" class="lang-switch" title="{{ altLangLabel }}">EN</a>
+                    {% endif %}
 
                     <!-- Dark Mode Toggle -->
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
@@ -79,7 +79,7 @@
     <!-- Footer -->
     <footer class="footer"></footer>
 
-    <script src="{{ basePath }}{% if basePath %}/{% endif %}assets/js/portfolio.js"></script>
+    <script src="{{ basePath }}/assets/js/portfolio.js"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

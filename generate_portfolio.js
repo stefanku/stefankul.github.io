@@ -7,14 +7,13 @@
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
-const { localizeData, generatePDF, renderHTML } = require('./generate_cv_lib');
+const { localizeData } = require('./generate_cv_lib');
 
 // Configuration
 const BASE_DIR = __dirname;
 const DATA_FILE = path.join(BASE_DIR, 'cv_data.json');
 const TEMPLATES_DIR = path.join(BASE_DIR, 'templates');
 const OUTPUT_DIR = path.join(BASE_DIR, 'docs');
-const CV_TEMPLATE = path.join(TEMPLATES_DIR, 'cv_template.html');
 
 // Languages to generate
 const LANGUAGES = ['en', 'nl'];
@@ -37,23 +36,6 @@ function copyFile(src, dest) {
 }
 
 /**
- * Copy directory recursively
- */
-function copyDir(src, dest) {
-    ensureDir(dest);
-    const entries = fs.readdirSync(src, { withFileTypes: true });
-    for (const entry of entries) {
-        const srcPath = path.join(src, entry.name);
-        const destPath = path.join(dest, entry.name);
-        if (entry.isDirectory()) {
-            copyDir(srcPath, destPath);
-        } else {
-            copyFile(srcPath, destPath);
-        }
-    }
-}
-
-/**
  * Configure Nunjucks environment
  */
 function setupNunjucks() {
@@ -62,22 +44,19 @@ function setupNunjucks() {
         trimBlocks: true,
         lstripBlocks: true,
     });
-
-    // Add custom filters
     env.addFilter('join', (arr, sep) => Array.isArray(arr) ? arr.join(sep) : arr);
-
     return env;
 }
 
 /**
  * Render a portfolio template
  */
-function renderTemplate(env, templateName, data, lang) {
+function renderTemplate(env, templateName, data, lang, basePath) {
     const localized = localizeData(data, lang);
     localized.t = data.translations[lang] || data.translations.en;
     localized.lang = lang;
     localized.visibility = data.sectionVisibility || {};
-    localized.basePath = lang === 'en' ? '' : '..';
+    localized.basePath = basePath;
     localized.altLang = lang === 'en' ? 'nl' : 'en';
     localized.altLangLabel = lang === 'en' ? 'Nederlands' : 'English';
 
@@ -86,19 +65,17 @@ function renderTemplate(env, templateName, data, lang) {
         const grouped = {};
         for (const pres of localized.presentations) {
             if (pres.visible === false) continue;
-            // Extract year from date (e.g., "September 2025" -> "2025", "2024" -> "2024")
             const yearMatch = pres.date ? pres.date.match(/\d{4}/) : null;
             const year = yearMatch ? yearMatch[0] : 'Other';
             if (!grouped[year]) grouped[year] = [];
             grouped[year].push(pres);
         }
-        // Convert to array sorted by year descending
         localized.presentationsByYear = Object.keys(grouped)
             .sort((a, b) => b - a)
             .map(year => ({ year, items: grouped[year] }));
     }
 
-    // Sort publications by year (descending) within each category
+    // Sort publications by year
     if (localized.publications) {
         const sortByYear = (a, b) => parseInt(b.year || 0) - parseInt(a.year || 0);
         if (localized.publications.books) {
@@ -152,15 +129,11 @@ async function generatePortfolio() {
 
     // Copy assets
     console.log('Copying assets...');
-
-    // Copy photo
     const photoPath = path.join(BASE_DIR, data.personal.photo);
     if (fs.existsSync(photoPath)) {
         copyFile(photoPath, path.join(OUTPUT_DIR, 'assets', 'images', 'portrait.jpeg'));
         console.log('  ✓ Portrait photo copied');
     }
-
-    // Copy CSS and JS
     const cssSource = path.join(TEMPLATES_DIR, 'portfolio.css');
     const jsSource = path.join(TEMPLATES_DIR, 'portfolio.js');
     if (fs.existsSync(cssSource)) {
@@ -173,54 +146,59 @@ async function generatePortfolio() {
     }
     console.log('');
 
-    // Generate pages for each language
+    // Copy CNAME if exists
+    const cnameSource = path.join(OUTPUT_DIR, '..', 'CNAME');
+    if (fs.existsSync(cnameSource)) {
+        copyFile(cnameSource, path.join(OUTPUT_DIR, 'CNAME'));
+    }
+
+    // Generate pages
     console.log('Generating pages...');
 
     for (const lang of LANGUAGES) {
-        const prefix = lang === 'en' ? '' : `${lang}/`;
-
-        // Home page
-        const homeHtml = renderTemplate(env, 'portfolio_home.html', data, lang);
+        // Home page - basePath differs for EN (root) vs NL (in /nl/)
+        const homeBasePath = lang === 'en' ? '.' : '..';
+        const homeHtml = renderTemplate(env, 'portfolio_home.html', data, lang, homeBasePath);
         const homePath = lang === 'en'
             ? path.join(OUTPUT_DIR, 'index.html')
             : path.join(OUTPUT_DIR, lang, 'index.html');
         fs.writeFileSync(homePath, homeHtml);
-        console.log(`  ✓ Home (${lang.toUpperCase()}): ${prefix}index.html`);
+        console.log(`  ✓ Home (${lang.toUpperCase()})`);
 
-        // CV page
-        const cvHtml = renderTemplate(env, 'portfolio_cv.html', data, lang);
-        const cvPagePath = lang === 'en'
+        // CV page - always in /cv/, so basePath is always '..'
+        const cvHtml = renderTemplate(env, 'portfolio_cv.html', data, lang, '..');
+        const cvPath = lang === 'en'
             ? path.join(OUTPUT_DIR, 'cv', 'index.html')
             : path.join(OUTPUT_DIR, 'cv', `${lang}.html`);
-        fs.writeFileSync(cvPagePath, cvHtml);
-        console.log(`  ✓ CV (${lang.toUpperCase()}): cv/${lang === 'en' ? 'index' : lang}.html`);
+        fs.writeFileSync(cvPath, cvHtml);
+        console.log(`  ✓ CV (${lang.toUpperCase()})`);
 
-        // Publications page
-        const pubsHtml = renderTemplate(env, 'portfolio_publications.html', data, lang);
+        // Publications page - always in /publications/
+        const pubsHtml = renderTemplate(env, 'portfolio_publications.html', data, lang, '..');
         const pubsPath = lang === 'en'
             ? path.join(OUTPUT_DIR, 'publications', 'index.html')
             : path.join(OUTPUT_DIR, 'publications', `${lang}.html`);
         fs.writeFileSync(pubsPath, pubsHtml);
-        console.log(`  ✓ Publications (${lang.toUpperCase()}): publications/${lang === 'en' ? 'index' : lang}.html`);
+        console.log(`  ✓ Publications (${lang.toUpperCase()})`);
 
-        // Presentations page
-        const presHtml = renderTemplate(env, 'portfolio_presentations.html', data, lang);
+        // Presentations page - always in /presentations/
+        const presHtml = renderTemplate(env, 'portfolio_presentations.html', data, lang, '..');
         const presPath = lang === 'en'
             ? path.join(OUTPUT_DIR, 'presentations', 'index.html')
             : path.join(OUTPUT_DIR, 'presentations', `${lang}.html`);
         fs.writeFileSync(presPath, presHtml);
-        console.log(`  ✓ Presentations (${lang.toUpperCase()}): presentations/${lang === 'en' ? 'index' : lang}.html`);
+        console.log(`  ✓ Presentations (${lang.toUpperCase()})`);
     }
-    console.log('');
 
-    // PDF generation disabled
+    // Recreate CNAME
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'CNAME'), 'stefankulk.nl');
+    console.log('  ✓ CNAME');
 
-    console.log('╔════════════════════════════════════════════════════╗');
+    console.log('\n╔════════════════════════════════════════════════════╗');
     console.log('║  Build complete! Preview with: npm run preview     ║');
     console.log('╚════════════════════════════════════════════════════╝');
 }
 
-// Run generator
 generatePortfolio().catch(err => {
     console.error('Build failed:', err);
     process.exit(1);

@@ -1,7 +1,6 @@
 {% extends "portfolio_base.html" %}
 
 {% set page = 'home' %}
-{% set altLangUrl = (lang == 'en') and 'nl/index.html' or '../index.html' %}
 
 {% block title %}{{ personal.name }} - {{ personal.credentials }}{% endblock %}
 
@@ -15,13 +14,13 @@
                 <p class="hero-subtitle">{{ personal.credentials }}</p>
                 <p class="hero-profile">{{ profile }}</p>
                 <div class="hero-actions">
-                    <a href="{{ basePath }}{% if basePath %}/{% endif %}cv/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="btn btn-primary">
+                    <a href="{{ basePath }}/cv/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="btn btn-primary">
                         {{ t.view_cv | default('View Full CV') }}
                     </a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="{{ basePath }}{% if basePath %}/{% endif %}assets/images/portrait.jpeg" alt="{{ personal.name }}" class="portrait">
+                <img src="{{ basePath }}/assets/images/portrait.jpeg" alt="{{ personal.name }}" class="portrait">
             </div>
         </div>
     </div>
@@ -31,7 +30,7 @@
 <section class="section">
     <div class="container">
         <div class="quick-links">
-            <a href="{{ basePath }}{% if basePath %}/{% endif %}publications/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="quick-link-card">
+            <a href="{{ basePath }}/publications/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="quick-link-card">
                 <div class="quick-link-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -42,7 +41,7 @@
                 <p class="quick-link-desc">{{ t.publications_desc | default('Books, articles, and research papers') }}</p>
             </a>
 
-            <a href="{{ basePath }}{% if basePath %}/{% endif %}presentations/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="quick-link-card">
+            <a href="{{ basePath }}/presentations/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="quick-link-card">
                 <div class="quick-link-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>

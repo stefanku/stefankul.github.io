@@ -1,7 +1,6 @@
 {% extends "portfolio_base.html" %}
 
 {% set page = 'cv' %}
-{% set altLangUrl = (lang == 'en') and 'nl.html' or 'index.html' %}
 
 {% block title %}CV - {{ personal.name }}{% endblock %}
 
@@ -90,11 +89,11 @@
         <!-- Publications & Presentations Links -->
         <div class="cv-section">
             <div class="cv-links-row">
-                <a href="{{ basePath }}{% if basePath %}/{% endif %}publications/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="btn btn-secondary">
-                    {{ t.publications_page_title | default('Publications') }} &rarr;
+                <a href="{{ basePath }}/publications/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="btn btn-secondary">
+                    {{ t.publications_page_title | default('Publications') }} →
                 </a>
-                <a href="{{ basePath }}{% if basePath %}/{% endif %}presentations/{% if lang != 'en' %}{{ lang }}.html{% endif %}" class="btn btn-secondary">
-                    {{ t.presentations_page_title | default('Presentations') }} &rarr;
+                <a href="{{ basePath }}/presentations/{% if lang != 'en' %}{{ lang }}.html{% else %}index.html{% endif %}" class="btn btn-secondary">
+                    {{ t.presentations_page_title | default('Presentations') }} →
                 </a>
             </div>
         </div>
